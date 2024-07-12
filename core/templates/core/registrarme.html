@@ -1,0 +1,145 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+
+
+ <!-- formulario_registro.html -->
+
+ <h1>Registro de cliente</h1>
+ 
+ <!-- Formulario de registro de cliente -->
+ <form id="formulario-registro" class="row g-3 needs-validation" method="post" novalidate>
+    {% csrf_token %}
+     <div class="container-fluid">
+         <div class="row">
+             <!-- Campos del formulario -->
+             <div class="col-md-4">
+
+                 <!-- Campo RUT -->
+                 <div class="mb-3">
+                     <label for="rut" class="form-label">RUT</label>
+                     <input required placeholder="Ej: 11123123-K" type="text" class="form-control" id="rut" name="rut" aria-describedby="rutHelp">
+                     <div id="rutHelp" class="form-text">
+                         Escribe el RUT sin puntos y con guión.
+                     </div>
+                     <div class="invalid-feedback">
+                         El campo RUT es obligatorio
+                     </div>
+                 </div>
+
+                 <!-- Campo Nombre -->
+                 <div class="mb-3">
+                     <label for="nombre" class="form-label">Nombre</label>
+                     <input required placeholder="Ej: Juan" type="text" class="form-control" id="nombre" name="nombre" aria-describedby="nombreHelp">
+                     <div id="nombreHelp" class="form-text">
+                         Escribe tu nombre.
+                     </div>
+                     <div class="invalid-feedback">
+                         El campo Nombre es obligatorio
+                     </div>
+                 </div>
+
+                 <!-- Campo Apellido -->
+                 <div class="mb-3">
+                     <label for="apellido" class="form-label">Apellido</label>
+                     <input required placeholder="Ej: González" type="text" class="form-control" id="apellido" name="apellido" aria-describedby="apellidoHelp">
+                     <div id="apellidoHelp" class="form-text">
+                         Escribe tu apellido.
+                     </div>
+                     <div class="invalid-feedback">
+                         El campo Apellido es obligatorio
+                     </div>
+                 </div>
+
+                 <!-- Campo Correo -->
+                 <div class="mb-3">
+                     <label for="correo" class="form-label">Correo</label>
+                     <input required placeholder="Ej: jgonzalez@gmail.com" type="email" class="form-control" id="correo" name="correo" aria-describedby="correoHelp">
+                     <div id="correoHelp" class="form-text">
+                         Escribe tu correo.
+                     </div>
+                     <div class="invalid-feedback">
+                         El campo Correo es obligatorio
+                     </div>
+                 </div>
+
+                 <!-- Campo Dirección -->
+                 <div class="mb-3">
+                     <label for="direccion" class="form-label">Dirección</label>
+                     <textarea required placeholder="Ej: Calle San Pedro 425, La Florida" class="form-control" rows="3" id="direccion" name="direccion" aria-describedby="direccionHelp"></textarea>
+                     <div id="direccionHelp" class="form-text">
+                         Escribe tu dirección.
+                     </div>
+                     <div class="invalid-feedback">
+                         El campo Dirección es obligatorio
+                     </div>
+                 </div>
+
+                 <!-- Campo Subscrito -->
+                 <div class="mb-3">
+                     <label for="subscrito" class="form-label">Con subscripción</label>
+                     <input type="checkbox" id="subscrito" name="subscrito">
+                     <div id="subscritoHelp" class="form-text">
+                         Deseo subscribirme con un aporte de $5.000 mensuales y obtener un 5% de descuento en mis compras.
+                     </div>
+                 </div>
+
+                 <!-- Campo Contraseña -->
+                 <div class="mb-3">
+                     <label for="password" class="form-label">Contraseña</label>
+                     <input type="password" required placeholder="Escribe aquí tu contraseña" class="form-control" id="password" name="password" aria-describedby="passwordHelp">
+                     <div id="passwordHelp" class="form-text">
+                         La contraseña debe tener un número, un símbolo, letras mayúsculas y minúsculas, y además debe tener al menos 8 caracteres.
+                     </div>
+                     <div class="invalid-feedback">
+                         El campo password es obligatorio
+                     </div>
+                 </div>
+
+                 <!-- Campo Repetir Contraseña -->
+                 <div class="mb-3">
+                     <label for="password2" class="form-label">Repetir contraseña</label>
+                     <input type="password" required placeholder="Repite aquí tu contraseña" class="form-control" id="password2" name="password2" aria-describedby="password2Help">
+                     <div id="password2Help" class="form-text">
+                         La contraseña debe ser igual a la de arriba.
+                     </div>
+                     <div class="invalid-feedback">
+                         El campo Repetir Contraseña es obligatorio
+                     </div>
+                 </div>
+
+             </div>
+             <!-- Foto de perfil -->
+             <div class="col-md-4 text-center">
+                 <img class="registro_foto" src="{% static 'core/img/sin-imagen.png' %}" alt="">
+                 <br><br>
+                 <input type="file" class="btn btn-primary">
+             </div>
+         </div>
+         <!-- Botonera -->
+         <div class="row">
+             <div class="col text-center">
+                 <button type="submit" class="btn btn-primary">Guardar</button>
+                 <button type="reset" class="btn btn-primary">Limpiar</button>
+             </div>
+         </div>
+     </div>
+ </form>
+  
+ {% csrf_token %}
+
+{% block script %}
+  <script src="{% static 'core/js/registrarme.js' %}"></script>
+{% endblock script %}
+<!-- 2. Script de JQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+<!-- 3. Script de JQuery Validate (usa el Script de JQuery anterior) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js" integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- 4. Mi Script de Validadores (usa el Script de JQuery y de JQuery Validate anteriores) -->
+<script src="{% static 'core/js/scripts.js' %}"></script>
+<script src="{% static 'core/js/validador.js' %}" type="text/javascript"></script>
+{% endblock content %}

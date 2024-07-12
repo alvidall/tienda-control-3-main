@@ -1,0 +1,165 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+
+    <!-- 
+        AREA DE DATOS BASICOS: combobox de categoría, combobox de producto y cantidad.
+        El Combobox de Producto se carga dependiendo del valor el Combobox de Categoría,
+        para ello se usa jquery y ajax.
+        (VER COMENTARIO "COMBOBOX DEPENDIENTES PARA CATEGORIA Y PRODUCTO" en bodega.js)
+    -->
+
+    <form id="form" method="POST">
+
+        {% csrf_token %}
+
+        <h1>Mantenedor de bodega</h1>
+
+        <div class="container-fluid">
+            <form id="formulario">
+                <!-- Datos del producto y su foto -->
+                <div class="row">
+                    <!-- Datos del producto a ingresar a la bodega -->
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="categoria" class="form-label">
+                                Categoría
+                            </label>
+                            <select id="categoria" class="form-select" aria-label="Selecciona la categoría">
+                                <option selected>Selecciona la categoría</option>
+                                <option value="1">RPG</option>
+                                <option value="2">Aventuras</option>
+                                <option value="3">Shooter</option>
+                            </select>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">
+                                Nombre del producto
+                            </label>
+                            <select id="nombre" class="form-select" aria-label="Selecciona el nombre del videojuego">
+                                <option selected>Selecciona el nombre del videojuego</option>
+                                <option value="1">Diablo 4</option>
+                                <option value="2">Fornite</option>
+                                <option value="3">Resident Evil 3</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cantidad" class="form-label">Cantidad</label>
+                            <div class="col">
+                                <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="3" required>
+                                <div id="cantidadError" class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Imagen del producto -->
+                    <div class="col">
+                        <img id="cuadro-imagen" src="{% static 'core/img/sin-imagen.png' %}" alt="">
+                    </div>
+                </div>
+    
+                <!-- Botones -->
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-primary">Nuevo</button>
+                        <button type="button" class="btn btn-primary">Agregar</button>
+                    </div>
+                </div>   
+    </form>
+
+    <!-- AREA DE TABLA DE PRODUCTOS -->
+
+    {% if productos %}
+
+         <!-- Productos en la bodega -->
+         <div class="row">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Categoria</th>
+                            <th>Nombre</th>
+                            <th>Estado</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaDatos">
+                        <!-- Aquí se agregarán los datos ingresados -->
+                        <tr>
+                            <td scope="row">27</td>
+                            <td scope="col">RPG</td>
+                            <td scope="col">Diablo </td>
+                            <td scope="col">Vendido</td>
+                            <td scope="col"><button type="button" href="#" class="btn btn/primary btn-sm">
+                                ver detalles
+                              </button>  
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row">27</td>
+                            <td scope="col">RPG</td>
+                            <td scope="col">Diablo </td>
+                            <td scope="col">Vendido</td>
+                            <td scope="col"><button type="button" href="#" class="btn btn/primary btn-sm">
+                                ver detalles
+                              </button>  
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="row">27</td>
+                            <td scope="col">RPG</td>
+                            <td scope="col">Diablo </td>
+                            <td scope="col">Vendido</td>
+                            <td scope="col"><button type="button" href="#" class="btn btn/primary btn-sm">
+                                ver detalles
+                              </button>  
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+        
+        <table id="tabla-principal" class="table table-hover">
+            <thead>
+                <!-- AREA DE TITULOS DE LA TABLA -->
+                <tr>
+                    <th> Imagen </th>
+                    <th> Acción </th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- AREA DE FILAS DE PRODUCTOS -->
+                {% for producto in productos %}
+                    <tr>
+                        <td>
+                            <img src="/media/{{ producto.imagen }}" class="producto-sm" alt="">
+                        </td>
+                        <!-- Botón de eliminar producto de bodega, se activa sólo para productos no vendidos -->
+                        <td>
+                            {% if producto.estado == 'En bodega' %}
+                                <a href="{% url 'eliminar_producto_en_bodega' producto.bodega_id %}" 
+                                    class="btn btn-danger btn-sm"> Eliminar </a>
+                            {% else %}
+                                <a href="{% url 'eliminar_producto_en_bodega' producto.bodega_id %}" 
+                                    class="btn btn-primary btn-sm disabled"> Eliminar </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+{% endblock content %}
+
+{% block script %}
+    <input type="hidden" id="url_obtener_productos" value="{% url 'obtener_productos' %}">
+    <script src="{% static 'core/js/bodega.js' %}"></script>
+{% endblock script %}

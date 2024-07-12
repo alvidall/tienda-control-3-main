@@ -1,0 +1,61 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+
+<div class="container">
+  <h1 class="text-center">Ingresar</h1>
+  <div class="row justify-content-center">
+      <div class="col-md-6">
+          <form id="form" method="POST" class="border border-3 p-4">
+              {% csrf_token %}
+              
+              <!-- Correo -->
+              <div class="mb-3 row">
+                  <label for="id_correo" class="col-sm-4 col-form-label">Correo</label>
+                  <div class="col-sm-8">
+                      <input type="text" class="form-control" id="id_username" name="username" value="{{ form.username.value }}">
+                      <div id="correoError" class="invalid-feedback">{{ form.correo.errors }}</div>
+                  </div>
+              </div>
+              
+              <!-- Contraseña -->
+              <div class="mb-3 row">
+                  <label for="id_password" class="col-sm-4 col-form-label">Contraseña</label>
+                  <div class="col-sm-8">
+                      <input type="password" class="form-control" id="id_password" name="password" value="{{ form.password.value }}">
+                      <div id="passwordError" class="invalid-feedback">{{ form.password.errors }}</div>
+                  </div>
+              </div>
+              
+              <!-- Botón Ingresar -->
+              <div class="mb-3 row">
+                  <div class="col-sm-12">
+                      <button type="submit" class="btn btn-primary col-sm-12">Ingresar</button>
+                  </div>
+              </div>
+              
+              <!-- Enlaces -->
+              <div class="mb-3 row">
+                  <div class="col-sm-6">
+                      <button type="button" class="btn btn-link">Olvidé mi contraseña</button>
+                  </div>
+                  <div class="col-sm-6">
+                    <a href="{% url 'registrarme' %}" class="btn btn-link">Registrarse</a>
+                </div>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+  <!-- Combobox de usuarios (QUITAR EN VERSION DE PRODUCCION DEL SOFTWARE) -->
+  <!-- NO LO BORRES PARA QUE PUEDAS HACER TUS PRUEBAS MAS RAPIDAMENTE  -->
+  {% include 'common/combobox_usuarios.html' %}
+  
+{% endblock content %}
+
+{% block script %}
+  <script src="{% static 'core/js/ingresar.js' %}"></script>
+{% endblock script %}

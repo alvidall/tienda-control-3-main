@@ -1,0 +1,97 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+  <h1>Mis Datos</h1>
+  
+  <form id="form" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <!-- Campo RUT -->
+                <div class="mb-3">
+                    <label for="rut" class="form-label">RUT</label>
+                    <input required type="text" class="form-control" id="rut" name="rut" value="{{ form_perfil.initial.rut }}">
+                </div>
+
+                <!-- Campo Nombre -->
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">Nombre</label>
+                    <input required type="text" class="form-control" id="first_name" name="first_name" value="{{ form_usuario.initial.first_name }}">
+                </div>
+
+                <!-- Campo Apellido -->
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Apellido</label>
+                    <input required type="text" class="form-control" id="last_name" name="last_name" value="{{ form_usuario.initial.last_name }}">
+                </div>
+
+                <!-- Campo Correo -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo</label>
+                    <input required type="email" class="form-control" id="email" name="email" value="{{ form_usuario.initial.email }}">
+                </div>
+
+                <!-- Campo Dirección -->
+                <div class="mb-3">
+                    <label for="direccion" class="form-label">Dirección</label>
+                    <textarea required class="form-control" id="direccion" name="direccion">{{ form_perfil.initial.direccion }}</textarea>
+                </div>
+
+                <!-- Campo Subscrito -->
+                <div class="mb-3">
+                    <label for="subscrito" class="form-label">Con subscripción</label>
+                    <input type="checkbox" id="subscrito" name="subscrito" {% if form_perfil.initial.subscrito %} checked {% endif %}>
+                </div>
+
+                <!-- Campo Contraseña -->
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+
+                <!-- Campo Repetir Contraseña -->
+                <div class="mb-3">
+                    <label for="password2" class="form-label">Repetir contraseña</label>
+                    <input type="password" class="form-control" id="password2" name="password2">
+                </div>
+            </div>
+
+            <!-- Foto de perfil -->
+            <div class="col-md-4 text-center">
+                {% if form_perfil.initial.imagen %}
+                    <img id="cuadro-imagen" class="registro_foto" src="/media/{{ form_perfil.initial.imagen }}" alt="">
+                {% else %}
+                    <img id="cuadro-imagen" class="registro_foto" src="{% static 'core/img/sin-imagen.png' %}" alt="">
+                {% endif %}
+                <br><br>
+                <input type="file" class="btn btn-primary" id="imagen" name="imagen" onchange="previewImage(event)">
+            </div>
+        </div>
+        
+        <!-- Botonera -->
+        <div class="row">
+            <div class="col text-center">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="reset" class="btn btn-primary">Limpiar</button>
+            </div>
+        </div>
+    </div>
+  </form>
+{% endblock content %}
+
+{% block script %}
+  <script>
+    function previewImage(event) {
+      var reader = new FileReader();
+      reader.onload = function(){
+        var output = document.getElementById('cuadro-imagen');
+        output.src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  </script>
+{% endblock script %}

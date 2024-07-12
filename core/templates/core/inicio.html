@@ -1,0 +1,120 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+
+<div id="carouselExampleCaptions" class="carousel slide">
+  <div class="carousel-indicators">
+    <button
+      type="button"
+      data-bs-target="#carouselExampleCaptions"
+      data-bs-slide-to="0"
+      class="active"
+      aria-current="true"
+      aria-label="Slide 1"
+    ></button>
+    <button
+      type="button"
+      data-bs-target="#carouselExampleCaptions"
+      data-bs-slide-to="1"
+      aria-label="Slide 2"
+    ></button>
+    <button
+      type="button"
+      data-bs-target="#carouselExampleCaptions"
+      data-bs-slide-to="2"
+      aria-label="Slide 3"
+    ></button>
+  </div>
+
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img
+        src="{% static 'core/img/diablo.jpg' %}"
+        class="d-block w-100"
+        alt="..."
+      />
+      <div class="carousel-caption d-none d-md-block">
+        <h5></h5>
+        <p></p>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <img
+        src="{% static 'core/img/descarga.jpg' %}"
+        class="d-block w-100"
+        alt="..."
+      />
+      <div class="carousel-caption d-none d-md-block">
+        <h5></h5>
+        <p></p>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <img
+        src="{% static 'core/img/warcraft3.jpg' %}"
+        class="d-block w-100"
+        alt="..."
+      />
+      <div class="carousel-caption d-none d-md-block">
+        <h5>30% Oferta</h5>
+        <p>Obtiene un 30% de descuento en tu primera compra.</p>
+      </div>
+    </div>
+  </div>
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#carouselExampleCaptions"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#carouselExampleCaptions"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+  {% if productos %}
+  
+  <div class="container-fluid">
+    <div class="row" style="border: 3px solid green">
+        {% for producto in productos %}
+        <div id="mini_producto" class="col p-2 col-sm_12 col-md-6 col-lg-4 col-xl-3">
+            <div class="card pt-2" style="width: 18rem">
+                <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}" />
+                <div class="card-body">
+                    <h5 class="card-title">{{ producto.nombre }}</h5>
+                    <p class="card-text">
+                        <span class="index_disponible"> {{ producto.disponibilidad }} </span>
+                        <br />
+                        <span class="index_precio"> Precio: {{ producto.precio }} </span>
+                        <br />
+                        <span class="index_subscrito"> Subscrito: {{ producto.precio_subscrito }} </span>
+                        <br />
+                        <span> {{ producto.descripcion }} </span>
+                        <br />
+                        <span class="index_stock"> En stock: {{ producto.stock }} unidades </span>
+                    </p>
+                    <a href="{% url 'ficha' producto.id %}" class="btn btn-primary">Comprar ahora</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<h2>No se encontraron productos</h2>
+{% endif %}
+
+{% endblock content %}

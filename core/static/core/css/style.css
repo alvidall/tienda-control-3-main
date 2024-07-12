@@ -1,0 +1,112 @@
+body {
+  padding: 10px;
+  background-color: orange;
+}
+
+h1,h2 {
+  color: blue;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.cuadro_login {
+  border: 1px solid blue;
+  padding: 10px;
+  width: 300px;
+}
+
+.boton_ingresar {
+  width: 200px;
+  margin: auto
+}
+
+.index_disponible {
+  color: green;
+  font-weight: bolder;
+}
+
+.index_precio {
+  color: blue;
+  font-size: 20px;
+}
+
+.index_subscrito {
+  color: red;
+  font-size: 20px;
+}
+
+.index_stock {
+  color: green;
+  font-weight: bolder;
+}
+
+.ficha_foto {
+  height: 100%;
+  float: right;
+  border: 3px solid gray;
+}
+
+.ficha_titulo {
+  font-size: 60px;
+  font-weight: bolder;
+}
+
+.ficha_disponible {
+  color: green;
+  font-weight: bolder;
+  font-size: 30px;
+}
+
+.ficha_precio {
+  font-size: 40px;
+}
+.menu{
+  background-color: orange;
+}
+.error {
+  color: red;
+  font-weight: bolder;
+}
+/* 
+div {
+  border: 1px solid blue;
+} */
+
+label {
+  font-weight: bolder;
+}
+/* Asegúrate de que esta clase se aplique a la etiqueta <nav> */
+.custom-navbar {
+  background-color: #007bff !important; /* Color azul */
+}
+
+.custom-navbar .nav-link {
+  color: white !important; /* Color del texto de los enlaces */
+}
+
+.custom-navbar .nav-link:hover {
+  color: #d4d4d4 !important; /* Color del texto de los enlaces al pasar el mouse */
+}
+
+.custom-navbar .navbar-brand {
+  color: white !important; /* Color del texto de la marca */
+}
+
+.custom-navbar .navbar-brand:hover {
+  color: #d4d4d4 !important; /* Color del texto de la marca al pasar el mouse */
+}
+.navbar .form-control {
+  background-color: white; /* Fondo blanco para el campo de búsqueda */
+  color: black; /* Texto negro para mejor contraste */
+}
+
+.navbar .btn-outline-success {
+  color: white; /* Texto blanco */
+  border-color: white; /* Borde blanco */
+}
+
+.navbar .btn-outline-success:hover {
+  color: black; /* Texto negro al pasar el mouse */
+  background-color: white; /* Fondo blanco al pasar el mouse */
+}

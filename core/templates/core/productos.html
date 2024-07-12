@@ -1,0 +1,84 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+
+<div class="container">
+  <!-- Formulario de Producto -->
+  <form id="form" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    {{ form.categoria|as_bootstrap_field }}
+    {{ form.nombre|as_bootstrap_field }}
+    {{ form.descripcion|as_bootstrap_field }}
+    {{ form.precio|as_bootstrap_field }}
+    {{ form.descuento_subscriptor|as_bootstrap_field }}
+    {{ form.descuento_oferta|as_bootstrap_field }}
+
+    <!-- Área de Cuadro de Imagen -->
+    {% if form.imagen.value %}
+      <img id="cuadro-imagen" src="/media/{{ form.imagen.value }}" alt="Imagen del producto">
+    {% else %}
+      <img id="cuadro-imagen" src="{% static 'core/img/sin-imagen.png' %}" alt="Sin imagen disponible">
+    {% endif %}
+    {{ form.imagen|as_bootstrap_field }}
+
+    <!-- Área de Botones -->
+    <div class="mt-2 mb-3 text-center">
+      <input class="btn btn-primary" type="submit" value="Guardar">
+      <a class="btn btn-primary" href="{% url 'productos' 'crear' '0' %}">Nuevo</a>
+      <button class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('id_imagen').click();">Seleccionar imagen</button>
+      {% if form.instance.id %}
+        <a class="btn btn-primary" href="{% url 'productos' 'eliminar' form.instance.id %}">Eliminar</a>
+      {% endif %}
+    </div>
+  </form>
+
+  <!-- Tabla de Productos -->
+  {% if productos %}
+    <table id="tabla-principal" class="table table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Categoría</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>%Subs</th>
+          <th>%Oferta</th>
+          <th>Imagen</th>
+          <th>Editar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for producto in productos %}
+          <tr>
+            <td>{{ producto.id }}</td>
+            <td>{{ producto.categoria }}</td>
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.descripcion }}</td>
+            <td>{{ producto.precio|formatear_dinero }}</td>
+            <td>{{ producto.descuento_subscriptor|formatear_porcentaje }}</td>
+            <td>{{ producto.descuento_oferta|formatear_porcentaje }}</td>
+            <td><img src="/media/{{ producto.imagen }}" class="producto-sm" alt="Imagen del producto"></td>
+            <td><a href="{% url 'productos' 'actualizar' producto.id %}" class="btn btn-primary btn-sm">Editar</a></td>
+            <td>
+              <form method="post" action="{% url 'productos' 'eliminar' producto.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</div>
+
+{% endblock content %}
+
+{% block script %}
+  <script src="{% static 'core/js/productos.js' %}"></script>
+{% endblock script %}
